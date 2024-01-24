@@ -1,0 +1,64 @@
+.STACK 100H
+.DATA
+A DB ?
+B DB ?
+C DB ?
+D DW " IS THE LARGEST NUMBER $"  
+  
+.CODE 
+MAIN PROC
+    
+MOV AX,@DATA
+
+MOV DS,AX
+MOV AH,1
+INT 21H
+MOV BL,AL
+
+MOV AH,1
+INT 21H
+MOV CL,AL
+
+MOV AH,1    
+INT 21H
+MOV BH,AL
+             
+             
+             
+                                    
+CMP BL,CL
+JG L1   
+
+CMP CL,BH
+JG LOUT2
+JMP L3
+
+L1: CMP BL,BH
+JG LOUT1
+CMP BH,CL
+JG L3
+
+CMP BL,CL 
+JG LOUT1
+JMP LOUT2
+ 
+
+LOUT1: MOV DL,BL 
+MOV AH,2
+INT 21H
+JMP EXIT
+
+
+LOUT2 : MOV DL,CL
+MOV AH,2
+INT 21H
+
+L3 :  MOV DL,BH 
+MOV AH,2
+INT 21H 
+
+EXIT: MOV AH,9
+MOV DX,D
+INT 21H
+
+MAIN ENDP
